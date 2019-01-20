@@ -10,6 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.MyLocationStyle;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private DrawerLayout drawer_layout;
@@ -18,6 +22,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btn_right;
     private RightFragment fg_right_menu;
     private FragmentManager fManager;
+    private MapView mMapView = null;
+    private AMap aMap = null;
+    private MyLocationStyle myLocationStyle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +32,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         fManager = getSupportFragmentManager();
         fg_right_menu = (RightFragment) fManager.findFragmentById(R.id.fg_right_menu);
+        mMapView = (MapView) findViewById(R.id.map);
+        mMapView.onCreate(savedInstanceState);
+
+        if (aMap == null) {
+            aMap = mMapView.getMap();
+        }
         initViews();
     }
 
@@ -34,9 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         topbar = findViewById(R.id.topbar);
         btn_right = (Button) topbar.findViewById(R.id.btn_right);
         btn_right.setOnClickListener(this);
-
         drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.END);
-
         drawer_layout.setDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View view, float v) {
@@ -58,13 +69,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
-
         fg_right_menu.setDrawerLayout(drawer_layout);
+
+        myLocationStyle = new MyLocationStyle();
+        myLocationStyle.interval(2000);
+        aMap.setMyLocationStyle(myLocationStyle);
+        aMap.setMyLocationEnabled(true);
     }
 
     @Override
     public void onClick(View v) {
         drawer_layout.openDrawer(Gravity.RIGHT);
         drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, Gravity.END);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mMapView.onSaveInstanceState(outState);
     }
 }

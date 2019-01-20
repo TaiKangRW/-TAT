@@ -30,13 +30,13 @@ public class RightFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_one:
-                Intent intent = new Intent(getActivity(), CompassActivity.class);
-                startActivity(intent);
-//                drawer_layout.closeDrawer(Gravity.END);
+                Intent intent1 = new Intent(getActivity(), CompassActivity.class);
+                startActivity(intent1);
+                drawer_layout.closeDrawer(Gravity.END);
                 break;
             case R.id.btn_two:
-                ContentFragment cFragment2 = new ContentFragment("2.点击了右侧菜单项二",R.color.colorPrimaryDark);
-                fManager.beginTransaction().replace(R.id.fly_content,cFragment2).commit();
+                Intent intent2 = new Intent(getActivity(), com.amap.api.maps.offlinemap.OfflineMapActivity.class);
+                startActivity(intent2);
                 drawer_layout.closeDrawer(Gravity.END);
                 break;
             case R.id.btn_three:

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#2F9AF2">
+    android:background="#303F9F">
 
     <Button
         android:id="@+id/btn_one"
@@ -16,7 +16,7 @@
         android:id="@+id/btn_two"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="BUTTON 2"/>
+        android:text="离线地图"/>
 
     <Button
         android:id="@+id/btn_three"
